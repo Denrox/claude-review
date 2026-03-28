@@ -1,0 +1,7 @@
+[
+  {
+    "url": "git@github.com:example/service-api.git",
+    "targetBranch": "main",
+    "alias": "service-api"
+  }
+]
