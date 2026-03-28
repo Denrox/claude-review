@@ -88,12 +88,24 @@ The diff is provided below.
 Focus your review on (in priority order):
 1. **Repository code pattern violations** (HIGH PRIORITY) — flag any code that deviates from
    the established patterns and conventions you identified in Step 1.
-2. **Code duplicates** (HIGH PRIORITY) — identify any duplicated logic that already exists
-   elsewhere in the repository or within the diff itself.
-3. **Security violations** — look for injection vulnerabilities, hardcoded secrets,
+2. **Code duplicates / extraction opportunities** (HIGH PRIORITY) — identify any duplicated logic that already exists
+   elsewhere in the repository or within the diff itself. For each duplicate, specify the exact file:line-range
+   AND quote the actual duplicated lines of code for EVERY occurrence (both in the diff and in the repo).
+   Do NOT just reference line numbers — always include the literal code so the reader can see the duplication.
+3. **Reusable logic candidates** — identify pieces of logic in the diff that are general-purpose enough
+   to be extracted into a shared utility, hook, or helper. Look for: data transformations, formatting,
+   validation, or business rules that are not specific to one component and could benefit other parts of
+   the codebase. Quote the code and suggest where it should live (e.g., an existing utils module).
+4. **Security violations** — look for injection vulnerabilities, hardcoded secrets,
    insecure data handling, missing input validation, and other OWASP top-10 issues.
 
 Also note: logical errors, potential bugs, missing edge-case handling, and test coverage gaps.
+
+IMPORTANT — REFERENCING LOCATIONS:
+When reporting issues, always reference the exact location using the format:
+  \`file/path.ts:42\` for a single line, or
+  \`file/path.ts:42-58\` for a range of lines.
+Use the line numbers from the target file (after applying the diff). Every finding MUST include at least one file:line or file:line-range reference.
 `;
 
   if (requirementsUrl) {
@@ -129,16 +141,19 @@ Structure your review as:
 ## Review Findings
 
 ### Pattern Violations (High Priority)
-(List each violation with file, line, description, and suggested fix)
+(List each violation with file:line or file:line-range, description, and suggested fix)
 
-### Code Duplicates (High Priority)
-(List duplicates found with locations)
+### Code Duplicates / Extraction Opportunities (High Priority)
+(For each duplicate, show the file:line-range AND quote the actual duplicated lines of code for EVERY occurrence — both in the diff and in every existing repo location. Do NOT just list line numbers; always include the literal code so the duplication is visible. Suggest extraction if applicable.)
+
+### Reusable Logic Candidates
+(Identify general-purpose logic that could be extracted into shared utilities, hooks, or helpers. Quote the code, explain why it is reusable, and suggest where it should live.)
 
 ### Security Issues
-(List any security concerns)
+(List any security concerns with file:line or file:line-range references)
 
 ### Other Issues
-(Bugs, edge cases, test gaps, etc.)
+(Bugs, edge cases, test gaps, etc. — always include file:line or file:line-range)
 
 ## Summary
 (Overall assessment and key action items)
