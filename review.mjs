@@ -90,12 +90,12 @@ Focus your review on (in priority order):
    the established patterns and conventions you identified in Step 1.
 2. **Code duplicates / extraction opportunities** (HIGH PRIORITY) — identify any duplicated logic that already exists
    elsewhere in the repository or within the diff itself. For each duplicate, specify the exact file:line-range
-   AND quote the actual duplicated lines of code for EVERY occurrence (both in the diff and in the repo).
-   Do NOT just reference line numbers — always include the literal code so the reader can see the duplication.
+   for EVERY occurrence (both in the diff and in the repo). Describe what the duplicated logic does
+   but do NOT include actual code — reference by file:line-range only.
 3. **Reusable logic candidates** — identify pieces of logic in the diff that are general-purpose enough
    to be extracted into a shared utility, hook, or helper. Look for: data transformations, formatting,
    validation, or business rules that are not specific to one component and could benefit other parts of
-   the codebase. Quote the code and suggest where it should live (e.g., an existing utils module).
+   the codebase. Reference by file:line-range and suggest where it should live (e.g., an existing utils module).
 4. **Security violations** — look for injection vulnerabilities, hardcoded secrets,
    insecure data handling, missing input validation, and other OWASP top-10 issues.
 
@@ -130,6 +130,11 @@ ${previousIterations.map((p) => `- ${p}`).join("\n")}
   }
 
   prompt += `
+IMPORTANT RULES:
+- The report MUST be in plain text format (.txt). Do NOT use markdown, HTML, or any other markup.
+- Do NOT include any code snippets in the report. Reference code only by file path and line numbers
+  (e.g., file/path.ts:42 or file/path.ts:42-58). Never quote or paste actual source code.
+
 OUTPUT FORMAT:
 Structure your review as:
 
@@ -144,10 +149,10 @@ Structure your review as:
 (List each violation with file:line or file:line-range, description, and suggested fix)
 
 ### Code Duplicates / Extraction Opportunities (High Priority)
-(For each duplicate, show the file:line-range AND quote the actual duplicated lines of code for EVERY occurrence — both in the diff and in every existing repo location. Do NOT just list line numbers; always include the literal code so the duplication is visible. Suggest extraction if applicable.)
+(For each duplicate, list the file:line-range for EVERY occurrence — both in the diff and in existing repo locations. Describe the duplicated logic but do NOT include code. Suggest extraction if applicable.)
 
 ### Reusable Logic Candidates
-(Identify general-purpose logic that could be extracted into shared utilities, hooks, or helpers. Quote the code, explain why it is reusable, and suggest where it should live.)
+(Identify general-purpose logic that could be extracted into shared utilities, hooks, or helpers. Reference by file:line-range, explain why it is reusable, and suggest where it should live. Do NOT include code.)
 
 ### Security Issues
 (List any security concerns with file:line or file:line-range references)
