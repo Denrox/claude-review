@@ -53,9 +53,6 @@ Each run auto-increments the iteration number. Claude is instructed to read prev
 ```bash
 # Basic — ticket ID only
 node review.mjs -t PROJ-123
-
-# With requirements URL
-node review.mjs -t PROJ-123 -r https://jira.example.com/browse/PROJ-123
 ```
 
 ### Options
